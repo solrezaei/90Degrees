@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cqtgt8dc34a6b"]
+
+[sub_resource type="GDScript" id="GDScript_qde6r"]
+script/source = "extends Resource
+
+signal dead
+
+var cur_health: int
+var max_health: int = 5 # max 20
+
+var unlocked_moves: Dictionary 	= {
+	\"LedgeHop\":	false,
+	\"Catch\":	false,
+	\"Blow\":		false
+}
+
+func _ready():
+	reset()
+
+func reset():
+	cur_health = max_health
+
+func take_damage(dam: int): 
+	cur_health = max(cur_health - dam, 0)
+	dead.emit()"
+
+[resource]
+script = SubResource("GDScript_qde6r")

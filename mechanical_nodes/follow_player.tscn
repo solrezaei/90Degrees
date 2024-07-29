@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://clyyru0iym72t"]
+
+[ext_resource type="Script" path="res://scripts/player/FollowPlayer.gd" id="1_6xje7"]
+
+[node name="FollowPlayer" type="Node3D"]
+script = ExtResource("1_6xje7")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
