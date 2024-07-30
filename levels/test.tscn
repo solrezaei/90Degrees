@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://1k3wp3jil2mv"]
+[gd_scene load_steps=12 format=3 uid="uid://1k3wp3jil2mv"]
 
 [ext_resource type="PackedScene" uid="uid://dqpqnirtenc7j" path="res://characters/driehonderd.tscn" id="1_ixgdf"]
 [ext_resource type="PackedScene" uid="uid://clyyru0iym72t" path="res://mechanical_nodes/follow_player.tscn" id="2_0x2xn"]
 [ext_resource type="Script" path="res://scripts/classes/HitBox.gd" id="3_fvxp6"]
+[ext_resource type="PackedScene" uid="uid://gi2j5epkawvq" path="res://projectiles/directional_projectile.tscn" id="4_xhm5y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lmrcr"]
 size = Vector3(100, 1, 100)
@@ -53,3 +54,66 @@ shape = SubResource("BoxShape3D_k3its")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HitBox"]
 mesh = SubResource("BoxMesh_ou7pl")
+
+[node name="DirectionalProjectile" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -28.8224, 1, -36.9652)
+
+[node name="DirectionalProjectile2" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -32.65, 1, -33.176)
+
+[node name="DirectionalProjectile3" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -36.5197, 1, -28.1457)
+
+[node name="DirectionalProjectile4" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -32.0507, 1, -27.8885)
+
+[node name="DirectionalProjectile5" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -28.1589, 1, -31.6864)
+
+[node name="DirectionalProjectile6" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -24.6098, 1, -36.4612)
+
+[node name="DirectionalProjectile7" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -24.4618, 1, -41.7552)
+
+[node name="DirectionalProjectile8" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -32.1409, 1, -23.8904)
+
+[node name="DirectionalProjectile9" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -35.9685, 1, -20.1012)
+
+[node name="DirectionalProjectile10" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -39.8382, 1, -15.0709)
+
+[node name="DirectionalProjectile11" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -35.3692, 1, -14.8137)
+
+[node name="DirectionalProjectile12" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -31.4774, 1, -18.6116)
+
+[node name="DirectionalProjectile13" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -27.9283, 1, -23.3864)
+
+[node name="DirectionalProjectile14" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -27.7803, 1, -28.6804)
+
+[node name="DirectionalProjectile15" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -18.7709, 1, -34.1787)
+
+[node name="DirectionalProjectile16" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -22.5984, 1, -30.3895)
+
+[node name="DirectionalProjectile17" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -26.4681, 1, -25.3592)
+
+[node name="DirectionalProjectile18" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -21.9992, 1, -25.102)
+
+[node name="DirectionalProjectile19" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -18.1074, 1, -28.8999)
+
+[node name="DirectionalProjectile20" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -14.5582, 1, -33.6747)
+
+[node name="DirectionalProjectile21" parent="." instance=ExtResource("4_xhm5y")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -14.4102, 1, -38.9687)
