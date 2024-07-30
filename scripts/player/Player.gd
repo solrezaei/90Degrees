@@ -125,12 +125,6 @@ func jump(duration: float = jump_duration):
 	temp.start(duration)
 
 
-func attack(): 
-	
-	%AttackSprite.play("attack")
-	%HitBox.activate(.5)
-
-
 func get_rotation_y():
 	return pivot.rotation.y
 

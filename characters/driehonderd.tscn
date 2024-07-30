@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dqpqnirtenc7j"]
+[gd_scene load_steps=60 format=3 uid="uid://dqpqnirtenc7j"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_bx0gj"]
 [ext_resource type="Script" path="res://scripts/classes/State.gd" id="2_bbi31"]
@@ -7,9 +7,9 @@
 [ext_resource type="Script" path="res://scripts/player/Die.gd" id="3_lu1oa"]
 [ext_resource type="Resource" uid="uid://cqtgt8dc34a6b" path="res://scripts/player/player_stats.tres" id="3_n4ene"]
 [ext_resource type="Script" path="res://scripts/player/Spawn.gd" id="4_4mfag"]
+[ext_resource type="Texture2D" uid="uid://cfrq62qnttu7" path="res://sprites/placeholder_player/wooshieball.png" id="4_fout7"]
 [ext_resource type="Texture2D" uid="uid://dihrqimdi76kk" path="res://sprites/placeholder_player/placeholder_player_spritesheet.png" id="4_hf4wp"]
 [ext_resource type="Script" path="res://scripts/classes/HitBox.gd" id="4_qhpuk"]
-[ext_resource type="Texture2D" uid="uid://bignyuv0n6yr2" path="res://sprites/placeholder_player/boom.png" id="5_47uto"]
 [ext_resource type="Texture2D" uid="uid://cdearmsdmb5pc" path="res://sprites/decal_shadows/elliptical_shadow.png" id="5_rbkua"]
 [ext_resource type="Script" path="res://scripts/classes/HurtBox.gd" id="5_yjui4"]
 [ext_resource type="Script" path="res://scripts/player/Idle.gd" id="6_nn651"]
@@ -18,72 +18,286 @@
 [ext_resource type="Script" path="res://scripts/player/Jump.gd" id="9_x6krc"]
 [ext_resource type="Script" path="res://scripts/player/Fall.gd" id="10_arobe"]
 [ext_resource type="Script" path="res://scripts/player/Flinch.gd" id="10_kpy0o"]
+[ext_resource type="Script" path="res://scripts/player/ReFoot.gd" id="14_2hrgw"]
 [ext_resource type="Script" path="res://scripts/player/Attack.gd" id="19_ty733"]
+
+[sub_resource type="Curve" id="Curve_n5o0b"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bgj1m"]
+curve = SubResource("Curve_n5o0b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s174r"]
+emission_shape = 2
+emission_sphere_radius = 0.4
+direction = Vector3(0, 1, 0)
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0.5, 0)
+alpha_curve = SubResource("CurveTexture_bgj1m")
+hue_variation_min = -0.1
+hue_variation_max = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbkwh"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.894908, 0.34229, 0.259262, 1)
+albedo_texture = ExtResource("4_fout7")
+texture_filter = 2
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_de6a8"]
+material = SubResource("StandardMaterial3D_nbkwh")
+size = Vector2(0.2, 0.2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s330u"]
 radius = 1.19542
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_or131"]
-atlas = ExtResource("5_47uto")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b101b"]
-atlas = ExtResource("5_47uto")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqyqq"]
-atlas = ExtResource("5_47uto")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_s1bnf"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_or131")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b101b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mqyqq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_or131")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b101b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mqyqq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_or131")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b101b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mqyqq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_or131")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b101b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mqyqq")
-}, {
-"duration": 1.0,
-"texture": null
-}],
-"loop": false,
-"name": &"attack",
-"speed": 8.0
+[sub_resource type="Animation" id="Animation_nropm"]
+resource_name = "attack_1"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1.0472, -0.25, 0, 0.25, 0, 1.0472, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackPivot/GPUParticles3D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackPivot/HitBox")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.4],
+"method": &"activate"
 }]
+}
+
+[sub_resource type="Animation" id="Animation_minur"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1.0472, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackPivot/GPUParticles3D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_c0amd"]
+resource_name = "attack_2"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.361367, -0.25, 0, 0.25, 0, -0.415488, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.1832, -0.25, 0, 0.25, 0, -0.228596, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.713724, -0.25, 0, 0.25, 0, 0.887551, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackPivot/GPUParticles3D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackPivot/HitBox")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.4],
+"method": &"activate"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vgql8"]
+resource_name = "attack_3"
+length = 0.7
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackPivot:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.401625, -0.25, 0, 0.25, 0, -0.42892, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackPivot:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-0.355864, -0.25, 0, 0.25, 0, 6.704, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackPivot:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.69775, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackPivot/GPUParticles3D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackPivot/HitBox")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.6],
+"method": &"activate"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h1u8j"]
+_data = {
+"RESET": SubResource("Animation_minur"),
+"attack_1": SubResource("Animation_nropm"),
+"attack_2": SubResource("Animation_c0amd"),
+"attack_3": SubResource("Animation_vgql8")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ih3t3"]
 atlas = ExtResource("4_hf4wp")
@@ -311,25 +525,32 @@ stat_component = ExtResource("3_n4ene")
 
 [node name="Pivot" type="Node3D" parent="."]
 
-[node name="HitBox" type="Area3D" parent="Pivot"]
+[node name="AttackPivot" type="Node3D" parent="Pivot"]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, 0, 0)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Pivot/AttackPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.40856)
+emitting = false
+amount = 512
+process_material = SubResource("ParticleProcessMaterial_s174r")
+draw_pass_1 = SubResource("QuadMesh_de6a8")
+
+[node name="HitBox" type="Area3D" parent="Pivot/AttackPivot"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568015, 1.14079)
+transform = Transform3D(0.59028, 0.584295, -0.556928, -0.716629, 0.696876, -0.0284252, 0.3715, 0.415889, 0.830074, -0.0372453, 0.680901, 1.37265)
 script = ExtResource("4_qhpuk")
 friendly = true
 monitorable_by_default = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/AttackPivot/HitBox"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("SphereShape3D_s330u")
 
-[node name="AttackSprite" type="AnimatedSprite3D" parent="Pivot"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.685764, 1.62237)
-pixel_size = 0.03
-billboard = 2
-texture_filter = 2
-sprite_frames = SubResource("SpriteFrames_s1bnf")
-animation = &"attack"
+libraries = {
+"": SubResource("AnimationLibrary_h1u8j")
+}
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Pivot"]
 offset = Vector2(0, 32)
@@ -387,7 +608,7 @@ script = ExtResource("10_kpy0o")
 script = ExtResource("2_bbi31")
 
 [node name="ReFoot" type="Node" parent="StateMachine"]
-script = ExtResource("2_bbi31")
+script = ExtResource("14_2hrgw")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("6_nn651")
