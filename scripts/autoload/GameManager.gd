@@ -31,6 +31,9 @@ func update_mouse():
 func get_player():
 	return get_tree().current_scene.get_node(NodePath("Player"))
 
+func get_camera():
+	return get_tree().current_scene.get_node(NodePath("FollowPlayer/Camera3D"))
+
 func set_alive(val: bool):
 	is_alive = val
 
