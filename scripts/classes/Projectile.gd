@@ -33,7 +33,7 @@ func _ready():
 	add_child(enemy_homing_detector)
 	
 	enemy_homing_detector.get_node(NodePath("CollisionShape3D")).shape.radius = homing_range
-	enemy_homing_detector.area_entered.connect(_home)
+	enemy_homing_detector.body_entered.connect(_home)
 	
 	_init()
 
@@ -45,7 +45,7 @@ func _physics_process(delta):
 	if deflected: 
 		#TODO: test this
 		if enemy_targeted: 
-			direction = lerp(direction, target.global_position - global_position, 5. * delta).normalized()
+			direction = lerp(direction, target.global_position - global_position, .1 * delta).normalized()
 		
 		return
 	
@@ -58,7 +58,7 @@ func deflect(dir: Vector3):
 	hurtbox.force_deactivate()
 	speed = DEFLECT_SPEED
 
-func _home(enemy: Area3D): 
+func _home(enemy: Node3D):#: Area3D): 
 	enemy_targeted = true
 	target = enemy
 

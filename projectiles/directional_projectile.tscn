@@ -15,6 +15,7 @@ radius = 1.0
 [node name="DirectionalProjectile" type="Node3D"]
 script = ExtResource("1_fh1u3")
 velocity = Vector3(5, 0, 5)
+homing_range = 30.0
 
 [node name="StatComponent" type="Node" parent="."]
 unique_name_in_owner = true

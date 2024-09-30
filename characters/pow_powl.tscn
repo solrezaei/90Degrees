@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://q1vwyksmlptj"]
+
+[ext_resource type="Script" path="res://scripts/classes/EnemyStatComponent.gd" id="1_jp478"]
+[ext_resource type="Texture2D" uid="uid://mg3dnd8oi2o" path="res://sprites/placeholder_enemy/evil_owl_placeholder.png" id="2_m8f55"]
+[ext_resource type="Script" path="res://scripts/classes/HurtBox.gd" id="3_tpkf2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u2km"]
+atlas = ExtResource("2_m8f55")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fbq7d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u2km")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gev8s"]
+radius = 2.18194
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tvjo8"]
+radius = 2.59571
+
+[node name="PowPowl" type="CharacterBody3D"]
+collision_layer = 17
+collision_mask = 0
+
+[node name="StatComponent" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_jp478")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+pixel_size = 0.02
+billboard = 2
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_fbq7d")
+autoplay = "default"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gev8s")
+
+[node name="HurtBox" type="Area3D" parent="."]
+script = ExtResource("3_tpkf2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("SphereShape3D_tvjo8")

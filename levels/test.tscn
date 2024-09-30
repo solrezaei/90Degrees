@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://1k3wp3jil2mv"]
+[gd_scene load_steps=13 format=3 uid="uid://1k3wp3jil2mv"]
 
 [ext_resource type="PackedScene" uid="uid://dqpqnirtenc7j" path="res://characters/driehonderd.tscn" id="1_ixgdf"]
 [ext_resource type="PackedScene" uid="uid://clyyru0iym72t" path="res://mechanical_nodes/follow_player.tscn" id="2_0x2xn"]
 [ext_resource type="Script" path="res://scripts/classes/HitBox.gd" id="3_fvxp6"]
 [ext_resource type="PackedScene" uid="uid://gi2j5epkawvq" path="res://projectiles/directional_projectile.tscn" id="4_xhm5y"]
+[ext_resource type="PackedScene" uid="uid://q1vwyksmlptj" path="res://characters/pow_powl.tscn" id="5_f64lw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lmrcr"]
 size = Vector3(100, 1, 100)
@@ -117,3 +118,6 @@ transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -14.5582, 
 
 [node name="DirectionalProjectile21" parent="." instance=ExtResource("4_xhm5y")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -14.4102, 1, -38.9687)
+
+[node name="PowPowl" parent="." instance=ExtResource("5_f64lw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9741, 2.73264, 27.1198)
